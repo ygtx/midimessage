@@ -1,0 +1,124 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden; }
+
+div#main {
+	width:100%;
+	height:100%;
+	background-color: white;
+	display: table;
+}
+
+div#bpm-container {
+    position: absolute;
+    top : 0;
+    left : 0;
+    width:100%;
+}
+
+div.centerizer {
+    margin: 0 auto;
+    width: 560px;
+    padding-top: 5px;
+}
+
+div#controller-container{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+div#controller-container:after{
+    content: ".";   
+    display: block;   
+    height: 0;   
+    clear: both;   
+    visibility: hidden; 
+}
+
+div#controller {
+    float:right;
+    width:20%;
+    background-color:red;
+    height:100%;
+}
+
+
+input#auto-play-button {
+    display:block;
+    float:left;
+}
+input#auto-play-bpm {
+    display:block;
+    float:left;
+    width: 60px;
+    border: 1px solid white;
+    height: 17px;
+    color: white;
+    background-color: red;
+    text-align: center;
+}
+
+p#bpm-counter {
+    display: block;
+    float: left;
+    width: 340px;
+    margin-left: 45px;
+}
+
+div#score-container {
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
+    position: absolute;
+    top: 60px;
+    left: 0;
+}
+
+
+span#input-part {
+    display:block;
+	width:70%;
+    height: 60%;
+	margin: 0 auto;
+	vertical-align: middle;
+	font-size: 24px;
+	font-weight: 100;
+    clear:both;
+    word-wrap:break-word;
+	font-family: "Microsoft Yi Baiti" ,"Modern No. 20";
+    line-height: 2em;
+    background-color: transparent;
+}
+
+#main-part {
+	display: table-cell;
+	width:100%;
+	min-height: 100%;
+	margin: 0 auto;
+	text-align: center;
+	vertical-align: middle;
+
+	font-size: 200px;
+	font-weight: 100;
+	/* font-family: "Source Sans Pro" ,"Apple Braille" ,"Edwardian Script ITC" ,"Microsoft Yi Baiti" ,"Modern No. 20"; */
+	font-family: "Microsoft Yi Baiti" ,"Modern No. 20";
+}
+
+.s-common {
+	/*display: none;*/
+}
+
+#audioarea {
+    display: none;	
+}
