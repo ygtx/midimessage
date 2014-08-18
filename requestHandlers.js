@@ -10,9 +10,22 @@ var pg = require('pg'),
     path = require('path'),
     qs = require('querystring')
     ;
+var index_view = fs.readFileSync('./views/index.ejs','utf8'); 
+var response_modal = fs.readFileSync('./views/response_modal.ejs','utf8'); 
+
+function connectToMysql(callback) {
+    var conString = "postgres://yagitatsuya@localhost:5432/mytest";
+    var client = new pg.Client(conString);
+    client.connect(function(err) {
+            if (err) {
+                throw err;
+            }
+            callback(client);
+            console.log("db callback end");
+    });
+}
 
 function start(response) {
-    var index_view = fs.readFileSync('./views/index.ejs','utf8');
     response.writeHead(200, {"Content-Type": "text/html"});
     response.write(ejs.render(index_view));
     response.end();
@@ -25,8 +38,43 @@ function upload(response, request) {
                 body += data;
         });
         request.on('end', function() {
-                var POST = qs.parse(body);
-                console.log(POST);
+            var POST = qs.parse(body);
+            console.log(POST);
+            console.log(POST['score[]']);
+
+            var score = POST['score[]'];
+            console.log(score);
+
+            var scoreString = score.toString(); 
+            var contentType = 'application/json';
+
+            connectToMysql(function(client) {
+                    client.query(
+                        'INSERT INTO score (score_string) VALUES ($1)',
+                        [scoreString],
+                        function(err, results) {
+                            client.end();
+                            if (!err) {
+                            } else {
+                                console.log(err.message);
+                                return;
+                            }
+                    });
+                    client.query(
+                        'SELECT * FROM SCORE',
+                        function(err, result) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                response.writeHead(200, {'Content-Type': contentType});
+                                var json = JSON.stringify({
+                                    scoreTbl: result
+                                });
+                                response.end(json);
+                                return;
+                            }
+                     });
+            });
         });
     } else if (req.method == 'GET') {
         console.log('get is not');

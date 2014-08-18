@@ -4,23 +4,42 @@
     <title>MidiTap</title>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script src="/public/js/sidr-package-1.2.1/jquery.sidr.min.js"></script>
 	<link rel="stylesheet" media="screen" type="text/css" href="/public/css/main.css" />
+	<link rel="stylesheet" media="screen" type="text/css" href="/public/js/sidr-package-1.2.1/stylesheets/jquery.sidr.light.css" />
   </head>
   <body>
     <div id="main">
-        <div id="bpm-container">
-            <div class="centerizer">
-                <!--<input type="text" name="autoPlayBPM" value="120" id="auto-play-bpm">-->
-                <!--<p id="bpm-counter"></p>-->
-            </div>
-        </div>
-        <div id="controller-container">
-            <div id="controller"></div>
-            
-        </div>
+
         <div id="score-container">
-    	    <span id="input-part"></span>
+    	    <span id="input-part">&nbsp;</span>
         </div>
+
+        <div id="controller-opener-container">
+            <a id="controller-opener" href="#sidr">Toggle Menu</a>
+        </div>
+
+
+        <div id="sidr" class="sidr">
+            <!-- Your content -->
+            <ul>
+                <li id="c_restart"><input type="image" src="public/img/icon_close_alt2.png" ></li>
+                <li id="c_stop_or_go">
+                    <div class="btn_centerize" id="c_b_stop"
+                        >
+                        <img src="public/img/icon_pause_alt2.png">
+                    </div>
+                    <div class="btn_centerize" id="c_b_go">
+                        <img src="public/img/arrow_triangle-right_alt2.png">
+                    </div>
+                </li>
+                <li id="c_upload">
+                    <input type="text" value="" id="c_t_nick_name">
+                    <input type="image" src="public/img/icon_cloud-upload.png" id="upload-button"></li>
+                </li>
+            </ul>
+        </div>
+
     	<p id="main-part">*</p>
 		<div id="audioarea">    	
             <audio id="A" class="s-common" src="public/data/soundsA/1.mp3" preload="auto" ></audio>
