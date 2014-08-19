@@ -98,7 +98,7 @@ $(function() {
 
 
     function startBaseBpmWriter() {
-        btnReadyStopOrGo();
+        btnReadyToStop();
         var scoreLength = score.length; 
         var counter = 0;
         bpmWriterTimer = setInterval(
@@ -125,9 +125,14 @@ $(function() {
         bpmWriterTimer = null;
     }
 
-    function btnReadyStopOrGo() {
+    function btnReadyToStop() {
         $("div#c_b_stop").show();
         $("div#c_b_go").hide();
+    }
+
+    function btnReadyToGo() {
+        $("div#c_b_stop").hide();
+        $("div#c_b_go").show();
     }
 
     function readyToStart() {
@@ -140,7 +145,16 @@ $(function() {
         eightWords = Array(8);
         score = []; 
         $("#input-part").html("");
-        btnReadyStopOrGo();
+        btnReadyToStop();
+    }
+
+    function loadScore(hiddenID, displayScore, actualScore) {
+        console.log('loading...'); 
+        console.log(displayScore); 
+        console.log(actualScore); 
+        $("#input-part").html(displayScore);
+        score = actualScore;
+        btnReadyToGo();
     }
 
 
@@ -352,6 +366,23 @@ $(function() {
                 } 
             });
 
+            // click the others score
+            $('li.generated_score_list').click(function() {
+                // console.log(1);
+                // console.log($(this));
+                // console.log($(this).children("input#hidden_id"));
+                // console.log($(this).children("input").val());
+                // 
+                var hiddenID = $(this).children(".hidden_id").val();
+                var displayScore = $(this).children(".hidden_display_score").val();
+                var actualScore = $(this).children(".score_list_score").html();
+
+
+                // console.log(displayScore);
+                // console.log(actualScore);
+                loadScore(hiddenID, displayScore, actualScore);
+
+            });
 
             // restart
             $('#c_restart').click(function() {
@@ -378,22 +409,25 @@ $(function() {
                  
             // upload button action
             $('#upload-button').click(function() {
+                var nickName = $('#c_t_nick_name').val();
+                var inputPartDOM = $("#input-part");
+                console.log(inputPartDOM);
+                console.log(inputPartDOM.html());
+
                 $.ajax({
                     type: "POST",
                     url:"/upload",
-                    data: { 'score[]' : score },
+                    data: { 
+                        'input_name' : nickName,
+                        'input_bpm' : bpm,
+                        'input_sound_name' : 'TEMP',
+                        'display_score_string' : inputPartDOM.html(),
+                        'score[]' : score 
+                    },
                     success: function(msg) {
                         console.log(msg);
-                        var rows = msg.scoreTbl.rows;
-                        for (var i = 0; rows.length; i++){
-                            $('#sidr').children('ul').append(
-                                '<li>' + 
-                                '<p>' + 'name : ' + rows[i].id + '</p>' + 
-                                '<p>' + 'sound :' + 'TODO' + '</p>' + 
-                                '<p>' + 'score :' + rows[i].score_string + '</p>' + 
-                                '</li>'
-                            );
-                        }
+                        $('.generated_score_ul').remove();
+                        $('#sidr').append(msg.scoreList);
                     }
                  });
             });

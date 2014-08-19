@@ -123,6 +123,33 @@ li#c_upload input#c_t_nick_name {
     line-height: 32px;
     font-size: 24px;
 }
+div.score_list_name {
+    margin: 0;
+    padding: 0;
+    float: left;
+    margin-left: 5px;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 36px;
+    margin-top: 10px;
+}
+div.score_list_sound {
+    float: right;
+    margin: 0;
+    margin-right: 5px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+div.score_list_score {
+    clear: both;
+    margin: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+    line-height: 16px;
+    word-wrap: break-word;
+    margin-bottom: 20px;
+}
 
 
 span#input-part {
