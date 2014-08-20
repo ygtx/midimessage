@@ -1,8 +1,4 @@
-var DBHOSTNAME = 'localhost'
-var PORT = 5432;
-var DBNAME = 'mytest';
-var DBUSER = 'yagitatsuya';
-var DBPASSWORD = null;
+var CNST = require("./constants");
 
 var pg = require('pg'),
     ejs = require('ejs'),
@@ -14,9 +10,13 @@ var index_view = fs.readFileSync('./views/index.ejs','utf8');
 var score_li = fs.readFileSync('./views/score_li.ejs','utf8'); 
 var score_ul = fs.readFileSync('./views/score_ul.ejs','utf8'); 
 
-function connectToMysql(callback) {
+function connectToDB(callback) {
     "use strict";
-    var conString = "postgres://yagitatsuya@localhost:5432/mytest";
+    var conString = CNST.DBDATASOURCE + 
+                    CNST.DBUSER  + 
+                    "@" + CNST.DBHOSTNAME + 
+                    ":" + CNST.DBPORT  + 
+                    "/" + CNST.DBNAME;
     var client = new pg.Client(conString);
     client.connect(function(err) {
             if (err) {
@@ -31,9 +31,9 @@ function buildScoreList(callback) {
     "use strict";
     var scoreList = '';
     var scoreUL = '';
-    connectToMysql(function(client) {
+    connectToDB(function(client) {
             client.query(
-                'SELECT * FROM score order by created_at desc limit 50;',
+                CNST.SQL_1, 
                 function(err, result) {
                     if (err) {
                         console.log(err);
@@ -87,9 +87,9 @@ function upload(response, request) {
 
             var contentType = 'application/json';
 
-            connectToMysql(function(client) {
+            connectToDB(function(client) {
                     client.query(
-                        'INSERT INTO score (name, bpm, sound_name, display_score_string, score_string, created_at) VALUES ($1, $2, $3, $4, $5, now()) RETURNING id',
+                        CNST.SQL_2, 
                         [inputName, inputBpm, inputSoundName, displayScore, scoreString],
                         function(err, result) {
                             if (err) {
