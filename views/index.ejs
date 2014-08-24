@@ -23,56 +23,85 @@
         <div id="sidr" class="sidr">
             <div class="sidr_controller">
                 <ul>
-                    <li id="c_restart"><input type="image" src="public/img/icon_close_alt2.png" ></li>
+
+                    <li id="c_restart">
+                        <input type="image" src="public/img/icon_close_alt2.png" >
+                    </li>
+                    
                     <li id="c_stop_or_go">
-                        <div class="btn_centerize" id="c_b_stop"
-                            >
+                        <div class="btn_centerize" id="c_b_stop">
                             <img src="public/img/icon_pause_alt2.png">
                         </div>
+
                         <div class="btn_centerize" id="c_b_go">
                             <img src="public/img/arrow_triangle-right_alt2.png">
                         </div>
                     </li>
+
                     <li id="c_upload">
-                        <input type="text" value="" id="c_t_nick_name">
+                        <select name="sound_name" id="sound_name">>
+                            <option value="0">patatap</option>
+                            <option value="1">jemapur01</option>
+                            <option value="2">jemapur02</option>
+                            <option value="3">jemapur03</option>
+                        </select>
+
+                        <input type="text" value="" id="c_t_nick_name" placeholder="input your name">
                         <input type="image" src="public/img/icon_cloud-upload.png" id="upload-button"></li>
-                </li>
-            </ul>
+                    </li>
+
+                    <li id="c_mail">
+                        <input type="email" value="" id="c_t_mail_to" placeholder="ex.) hoge@fuga.com">
+                        <input type="image" src="public/img/icon_mail_alt.png" id="email-button"></li>
+                    </li>
+
+                    <li id="c_download">
+                        <input type="image" src="public/img/icon_cloud-download.png" id="download-button"></li>
+                    </li>
+
+                    
+
+                </ul>
             </div>
-
-            <%- score_list %>
-
         </div>
 
     	<p id="main-part">*</p>
 		<div id="audioarea">    	
-            <audio id="A" class="s-common" src="public/data/soundsA/1.mp3" preload="auto" ></audio>
-            <audio id="S" class="s-common" src="public/data/soundsA/2.mp3" preload="auto" ></audio>
-            <audio id="D" class="s-common" src="public/data/soundsA/3.mp3" preload="auto" ></audio>
-            <audio id="F" class="s-common" src="public/data/soundsA/4.mp3" preload="auto" ></audio>
-            <audio id="G" class="s-common" src="public/data/soundsA/5.mp3" preload="auto" ></audio>
-            <audio id="H" class="s-common" src="public/data/soundsA/6.mp3" preload="auto" ></audio>
-            <audio id="J" class="s-common" src="public/data/soundsA/7.mp3" preload="auto" ></audio>
-            <audio id="K" class="s-common" src="public/data/soundsA/8.mp3" preload="auto" ></audio>
-            <audio id="L" class="s-common" src="public/data/soundsA/9.mp3" preload="auto" ></audio>
-            <audio id="Q" class="s-common" src="public/data/soundsQ/1.mp3" preload="auto" ></audio>
-            <audio id="W" class="s-common" src="public/data/soundsQ/2.mp3" preload="auto" ></audio>
-            <audio id="E" class="s-common" src="public/data/soundsQ/3.mp3" preload="auto" ></audio>
-            <audio id="R" class="s-common" src="public/data/soundsQ/4.mp3" preload="auto" ></audio>
-            <audio id="T" class="s-common" src="public/data/soundsQ/5.mp3" preload="auto" ></audio>
-            <audio id="Y" class="s-common" src="public/data/soundsQ/6.mp3" preload="auto" ></audio>
-            <audio id="U" class="s-common" src="public/data/soundsQ/7.mp3" preload="auto" ></audio>
-            <audio id="I" class="s-common" src="public/data/soundsQ/8.mp3" preload="auto" ></audio>
-            <audio id="O" class="s-common" src="public/data/soundsQ/9.mp3" preload="auto" ></audio>
-            <audio id="P" class="s-common" src="public/data/soundsQ/10.mp3" preload="auto" ></audio>
-            <audio id="Z" class="s-common" src="public/data/soundsZ/1.mp3" preload="auto" ></audio>
-            <audio id="X" class="s-common" src="public/data/soundsZ/2.mp3" preload="auto" ></audio>
-            <audio id="C" class="s-common" src="public/data/soundsZ/3.mp3" preload="auto" ></audio>
-            <audio id="V" class="s-common" src="public/data/soundsZ/4.mp3" preload="auto" ></audio>
-            <audio id="B" class="s-common" src="public/data/soundsZ/5.mp3" preload="auto" ></audio>
-            <audio id="N" class="s-common" src="public/data/soundsZ/6.mp3" preload="auto" ></audio>
-            <audio id="M" class="s-common" src="public/data/soundsZ/7.mp3" preload="auto" ></audio>
+            <audio id="A" class="s-common" src="public/data/patatap/soundsA/1.mp3" preload="auto" ></audio>
+            <audio id="S" class="s-common" src="public/data/patatap/soundsA/2.mp3" preload="auto" ></audio>
+            <audio id="D" class="s-common" src="public/data/patatap/soundsA/3.mp3" preload="auto" ></audio>
+            <audio id="F" class="s-common" src="public/data/patatap/soundsA/4.mp3" preload="auto" ></audio>
+            <audio id="G" class="s-common" src="public/data/patatap/soundsA/5.mp3" preload="auto" ></audio>
+            <audio id="H" class="s-common" src="public/data/patatap/soundsA/6.mp3" preload="auto" ></audio>
+            <audio id="J" class="s-common" src="public/data/patatap/soundsA/7.mp3" preload="auto" ></audio>
+            <audio id="K" class="s-common" src="public/data/patatap/soundsA/8.mp3" preload="auto" ></audio>
+            <audio id="L" class="s-common" src="public/data/patatap/soundsA/9.mp3" preload="auto" ></audio>
+            <audio id="Q" class="s-common" src="public/data/patatap/soundsQ/1.mp3" preload="auto" ></audio>
+            <audio id="W" class="s-common" src="public/data/patatap/soundsQ/2.mp3" preload="auto" ></audio>
+            <audio id="E" class="s-common" src="public/data/patatap/soundsQ/3.mp3" preload="auto" ></audio>
+            <audio id="R" class="s-common" src="public/data/patatap/soundsQ/4.mp3" preload="auto" ></audio>
+            <audio id="T" class="s-common" src="public/data/patatap/soundsQ/5.mp3" preload="auto" ></audio>
+            <audio id="Y" class="s-common" src="public/data/patatap/soundsQ/6.mp3" preload="auto" ></audio>
+            <audio id="U" class="s-common" src="public/data/patatap/soundsQ/7.mp3" preload="auto" ></audio>
+            <audio id="I" class="s-common" src="public/data/patatap/soundsQ/8.mp3" preload="auto" ></audio>
+            <audio id="O" class="s-common" src="public/data/patatap/soundsQ/9.mp3" preload="auto" ></audio>
+            <audio id="P" class="s-common" src="public/data/patatap/soundsQ/10.mp3" preload="auto" ></audio>
+            <audio id="Z" class="s-common" src="public/data/patatap/soundsZ/1.mp3" preload="auto" ></audio>
+            <audio id="X" class="s-common" src="public/data/patatap/soundsZ/2.mp3" preload="auto" ></audio>
+            <audio id="C" class="s-common" src="public/data/patatap/soundsZ/3.mp3" preload="auto" ></audio>
+            <audio id="V" class="s-common" src="public/data/patatap/soundsZ/4.mp3" preload="auto" ></audio>
+            <audio id="B" class="s-common" src="public/data/patatap/soundsZ/5.mp3" preload="auto" ></audio>
+            <audio id="N" class="s-common" src="public/data/patatap/soundsZ/6.mp3" preload="auto" ></audio>
+            <audio id="M" class="s-common" src="public/data/patatap/soundsZ/7.mp3" preload="auto" ></audio>
        </div>
+
+        <div id="score-list-container">
+            <%- score_list %>
+            <div id="score-list-close-button">
+                <input type="image" src="public/img/icon_close.png" id="score-list-button"></li>
+            </div>
+        </div>
+
     </div>
     <script src="public/js/main.js"></script>
   </body>

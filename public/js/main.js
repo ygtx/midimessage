@@ -9,6 +9,8 @@ var words = "";
 var bpmWriterPauseFlag = false;
 var inputFocusFlag = false;
 
+var uploadedId = null;
+
 // var APP_ERR_1 = 'capped. in checkSomething';
 
 
@@ -47,6 +49,17 @@ var openFlag = false;
 $(function() {
     "use strict";
 
+    function validateEmail(sEmail) {
+        var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (filter.test(sEmail)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
 
     /* -----------------------------------------------
      *
@@ -64,6 +77,13 @@ $(function() {
         $("div#c_b_stop").hide();
         $("div#c_b_go").show();
         console.log(88);
+    }
+
+    function hideScoreListModal() {
+        $('div#score-list-container').fadeOut(200);
+    }
+    function showScoreListModal() {
+        $('div#score-list-container').fadeIn(200);
     }
 
     /* -----------------------------------------------
@@ -86,6 +106,23 @@ $(function() {
         $("#main-part").html("*");
     }
 
+    function loadSelectSound(soundId) {
+        $.ajax({
+            type: "POST",
+            url: "/select_sound",
+            data: { "sound_id" : soundId },
+            success: function(data, status, xhr) {
+                console.log(data);
+                if (xhr.status === 200) {
+                    if (data.APP_ERR) {
+                        alert(data.APP_ERR);
+                    } else {
+                        $('#audioarea').html(data.dc);
+                    }
+                }
+            }
+        });
+    }
 
     /* -----------------------------------------------
      *
@@ -144,6 +181,7 @@ $(function() {
             clearInterval(bpmWriterTimer);
         }
         bpmWriterTimer = null;
+        btnReadyToGo();
     }
 
     function autoPlay() {
@@ -176,12 +214,14 @@ $(function() {
         }
     }
 
-    function loadScore(hiddenID, displayScore, actualScore) {
+    function loadScore(hiddenID, soundId, displayScore, actualScore) {
         console.log('loading...'); 
         console.log(displayScore); 
         console.log(actualScore); 
         $("#input-part").html(displayScore);
         $("#main-part").html("*");
+        console.log(soundId);
+        $("select#sound_name").val(soundId);
         score = actualScore;
         stopAutoPlay();
         btnReadyToGo();
@@ -396,15 +436,21 @@ $(function() {
                 } 
             });
 
+            // click c_download
+            $('input#download-button').click(function() {
+                showScoreListModal();
+            });
+
+            // click score-list-close-button
+            $('input#score-list-button').click(function() {
+                hideScoreListModal();
+            });
+
+
             // sidr ui
             $("div#sidr").scroll(function() {
-                $("div.sidr_controller").css({
-                    position: "fixed"
-                });
                 $("div.sidr_scores").css({
-                    position: "relative",
-                    top: 300,
-                    height: $(window).height() - 300
+                    height: $(window).height() - 340
                 });
             });
 
@@ -413,21 +459,29 @@ $(function() {
                 var hiddenID = $(this).children(".hidden_id").val();
                 var displayScore = $(this).children(".hidden_display_score").val();
                 var actualScore = $(this).children(".score_list_score").html();
+                var soundId = $(this).children(".hidden_sound_id").val();
 
-                loadScore(hiddenID, displayScore, actualScore);
+                loadScore(hiddenID, soundId, displayScore, actualScore);
+                loadSelectSound(soundId);
+                uploadedId = hiddenID;
+
+                hideScoreListModal();
             });
 
             // restart
             $('#c_restart').click(function() {
                 initialize();
+                uploadedId = null;
             });
 
             // stop and go
             $('#c_b_stop').click(function() {
                 stopAutoPlay();
+                uploadedId = null;
             });
             $('#c_b_go').click(function() {
                 autoPlay();
+                uploadedId = null;
             });
 
             // sidr close when mouse is out of screen
@@ -435,13 +489,26 @@ $(function() {
                 $("#controller-opener").click();
                 openFlag = false;
             });
-                 
+
+            // select sound
+            $('select#sound_name').change(function() {
+                var selectedSoundId = $(this).val();
+                loadSelectSound(selectedSoundId);
+                uploadedId = null;
+            });
+
+            $('input').change(function() {
+                uploadedId = null;
+            });
+
             // upload button action
             $('#upload-button').click(function() {
+                if (uploadedId) {
+                    return alert('please type something another.');
+                }
                 var nickName = $('#c_t_nick_name').val();
                 var inputPartDOM = $("#input-part");
-                console.log(inputPartDOM);
-                console.log(inputPartDOM.html());
+                var selectedSoundId = $("select#sound_name").val();
 
                 $.ajax({
                     type: "POST",
@@ -449,23 +516,83 @@ $(function() {
                     data: { 
                         'input_name' : nickName,
                         'input_bpm' : bpm,
-                        'input_sound_name' : 'patatap',
+                        'input_sound_id' : selectedSoundId,
                         'display_score_string' : inputPartDOM.html(),
                         'score[]' : score 
                     },
                     success: function(data, status, xhr) {
+                        console.log(data);
                         if (xhr.status === 200) {
                             if (data.APP_ERR) {
                                 alert(data.APP_ERR);
                             } else {
-                                $('.generated_score_ul').remove();
-                                $('#sidr').append(data.scoreList);
+                                $('div#score-list').remove();
+                                $('div#score-list-container').prepend(data.scoreList);
+                                uploadedId = data.uploadedId;
+                                alert('saved');
                             }
                         }
                         console.log("---------------");
                     }
                  });
             });
+
+            // mail button action
+            $('#email-button').click(function() {
+                var nickName = $('#c_t_nick_name').val();
+                var inputPartDOM = $("#input-part");
+                var selectedSoundId = $("select#sound_name").val();
+                var emailAddress = $("input#c_t_mail_to").val();
+
+                if (!emailAddress || emailAddress === null || !validateEmail(emailAddress)) {
+                    return alert('please input correct email address.');
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url:"/send_mail",
+                    data: { 
+                        'input_name' : nickName,
+                        'input_bpm' : bpm,
+                        'input_sound_id' : selectedSoundId,
+                        'display_score_string' : inputPartDOM.html(),
+                        'score[]' : score,
+                        'email_address' : emailAddress,
+                        'uploaded_id' : uploadedId
+                    },
+                    success: function(data, status, xhr) {
+                        console.log(data);
+                        if (xhr.status === 200) {
+                            if (data.APP_ERR) {
+                                alert(data.APP_ERR);
+                            } else {
+                                alert('mail has been sent.');
+                            }
+                        }
+                        console.log("---------------");
+                    }
+                 });
+                
+            });
+
+            // if load
+            var parameters = location.href.split("?");
+            console.log(parameters);
+            if (parameters[1]) {
+                var params  = parameters[1].split("&");
+                var paramsArray = {};
+                for ( var i = 0; i < params.length; i++ ) {
+                    var neet = params[i].split("=");
+                    paramsArray[neet[0]] = neet[1];
+                }
+
+                var scoreId  = paramsArray.score;
+
+                if (scoreId && $.isNumeric(scoreId)) {
+                    console.log($("li.score_id_is_" + scoreId));
+                    $("li.score_id_is_" + scoreId).click();
+                }
+            }
     });
 }); 
 

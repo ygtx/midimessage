@@ -1,13 +1,15 @@
+/*jslint node: true */
+"use strict";
+
 var http = require("http");
 var url = require("url");
 
 function start(route, handle) {
     function onRequest(request, response) {
         var pathname = url.parse(request.url).pathname;
-//        console.log("Request for " + pathname + " received");
-        var pathArray = pathname.split("/");
-        pathname = (pathArray[1] == null) ? pathname : '/' + pathArray[1];
-
+        if (pathname.lastIndexOf('/public',0) === 0) {
+            pathname = '/public';
+        } 
         route(handle, pathname, response, request);
     }
     http.createServer(onRequest).listen(8888);

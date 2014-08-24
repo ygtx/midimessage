@@ -73,15 +73,8 @@ input:focus, select:focus, textarea:focus {
     outline: none;
 }
 div#sidr div.sidr_controller {
-    position: absolute;
+    position: fixed;
     top: 0;
-}
-
-div#sidr div.sidr_scores {
-    position: absolute;
-    top: 300px;
-    overflow-y: scroll;
-    overflow-x: fixed;
 }
 
 div#sidr ul li#c_restart {
@@ -128,6 +121,15 @@ div#sidr ul li#c_upload {
 li#c_upload:hover {
     opacity: 0.8;
 }
+li#c_upload select {
+    margin-left: 13px;
+    margin-right: 13px;
+    width: 90%;
+    line-height: 48px;
+    font-size: 20px;
+    height: 2em;
+}
+
 li#c_upload input#c_t_nick_name {
     margin-left: 13px;
     margin-right: 13px;
@@ -135,6 +137,69 @@ li#c_upload input#c_t_nick_name {
     line-height: 32px;
     font-size: 24px;
 }
+
+li#c_mail {
+    text-align:center;
+    padding-top: 20px;
+}
+li#c_mail:hover {
+    opacity: 0.8;
+}
+li#c_mail input#c_t_mail_to {
+    margin-left: 13px;
+    margin-right: 13px;
+    width: 90%;
+    line-height: 32px;
+    font-size: 16px;
+}
+li#c_download {
+    text-align:center;
+    padding-top: 20px;
+}
+li#c_download:hover {
+    opacity: 0.8;
+}
+li.c_header {
+    text-align:center;
+    line-height: 2em !important;
+    background-color: gray;
+    color: white;
+}
+
+div#score-list-container {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1999999;
+    background-color: rgba(53,53,53,0.2);
+    display:none;
+}
+
+div#score-list {
+    margin-top: 50px;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+    height: 80%;
+    overflow: scroll;
+}
+
+li.generated_score_list {
+    float: left;
+    width: 30%;
+    height: 150px;
+    margin-left: 2.5%;
+    margin-bottom: 2.5%;
+    overflow: hidden;
+    background-color: white;
+}
+
+li.generated_score_list:last-child {
+    margin-right: 2.5%;
+}
+
 div.score_list_name {
     margin: 0;
     padding: 0;
@@ -150,6 +215,9 @@ div.score_list_sound {
     margin: 0;
     margin-right: 5px;
     font-size: 16px;
+    line-height: 1.4em;
+    position: relative;   
+    margin-top: 20px;   
     font-weight: 600;
 }
 
@@ -158,9 +226,16 @@ div.score_list_score {
     margin: 0;
     margin-left: 5px;
     margin-right: 5px;
-    line-height: 16px;
+    font-size: 12px;
+    line-height: 1.2em;
     word-wrap: break-word;
     margin-bottom: 20px;
+}
+
+div#score-list-close-button {
+    margin: 0 auto;
+    width: 10%;
+    text-align:center;
 }
 
 
