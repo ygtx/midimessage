@@ -9,6 +9,8 @@ var words = "";
 var bpmWriterPauseFlag = false;
 var inputFocusFlag = false;
 
+// var APP_ERR_1 = 'capped. in checkSomething';
+
 
 var eightWords = Array(8);
 var score = [];
@@ -44,11 +46,53 @@ var openFlag = false;
 
 $(function() {
     "use strict";
+
+
+    /* -----------------------------------------------
+     *
+     * styles 
+     *
+     --------------------------------------------------*/
+
+    function btnReadyToStop() {
+        $("div#c_b_stop").show();
+        $("div#c_b_go").hide();
+        console.log(99);
+    }
+
+    function btnReadyToGo() {
+        $("div#c_b_stop").hide();
+        $("div#c_b_go").show();
+        console.log(88);
+    }
+
+    /* -----------------------------------------------
+     *
+     * set up 
+     *
+     --------------------------------------------------*/
+
+    function initialize() {
+        autoPlayTimer = null; 
+        bpmCounterTimer = null;
+        bpmWriterTimer = null; 
+        words = "";
+        bpmWriterPauseFlag = false;
+        inputFocusFlag = false;
+        eightWords = Array(8);
+        score = []; 
+        $("#input-part").html("");
+        btnReadyToStop();
+        $("#main-part").html("*");
+    }
+
+
     /* -----------------------------------------------
      *
      * timers 
      *
      --------------------------------------------------*/
+
 
     function startBpmCount() {
         if (bpmCounterTimer !== null) {
@@ -72,29 +116,6 @@ $(function() {
         },bpmTimeMsec);
     }
 
-    function autoPlay() {
-        var index = 0;
-        autoPlayTimer = setInterval(
-          function() {
-                if (index >= score.length) {
-                    clearInterval(autoPlayTimer);
-                    autoPlayTimer = null;
-                    return;
-                }
-                var s = document.getElementById(score[index]);
-                if (s !== null) {
-                    myPlay(s, score[index]);
-                }
-                index++;
-        },bpmTimeMsec);
-        
-        autoPlayTimer = null;
-    }
-
-    function stopAutoPlay() {
-        clearInterval(autoPlayTimer);
-        autoPlayTimer = null;
-    }
 
 
     function startBaseBpmWriter() {
@@ -125,27 +146,34 @@ $(function() {
         bpmWriterTimer = null;
     }
 
-    function btnReadyToStop() {
-        $("div#c_b_stop").show();
-        $("div#c_b_go").hide();
-    }
-
-    function btnReadyToGo() {
-        $("div#c_b_stop").hide();
-        $("div#c_b_go").show();
-    }
-
-    function readyToStart() {
-        autoPlayTimer = null; 
-        bpmCounterTimer = null;
-        bpmWriterTimer = null; 
-        words = "";
-        bpmWriterPauseFlag = false;
-        inputFocusFlag = false;
-        eightWords = Array(8);
-        score = []; 
-        $("#input-part").html("");
+    function autoPlay() {
+        var index = 0;
         btnReadyToStop();
+        if (autoPlay !== null) {
+            clearInterval(autoPlayTimer);
+            autoPlayTimer = null;
+        }
+        autoPlayTimer = setInterval(
+          function() {
+                if (index >= score.length) {
+                    stopAutoPlay();
+                    return;
+                }
+                var s = document.getElementById(score[index]);
+                if (s !== null) {
+                    myPlay(s, score[index]);
+                }
+                index++;
+        },bpmTimeMsec);
+    }
+
+    function stopAutoPlay() {
+        clearInterval(autoPlayTimer);
+        autoPlayTimer = null;
+        stopBaseBpmWriter();
+        if (score.length !== 0) {
+            btnReadyToGo();
+        }
     }
 
     function loadScore(hiddenID, displayScore, actualScore) {
@@ -153,7 +181,9 @@ $(function() {
         console.log(displayScore); 
         console.log(actualScore); 
         $("#input-part").html(displayScore);
+        $("#main-part").html("*");
         score = actualScore;
+        stopAutoPlay();
         btnReadyToGo();
     }
 
@@ -343,7 +373,7 @@ $(function() {
             }); 
 
             // initialize
-            readyToStart();
+            initialize();
 
             // start
             startBpmCount();
@@ -366,39 +396,38 @@ $(function() {
                 } 
             });
 
+            // sidr ui
+            $("div#sidr").scroll(function() {
+                $("div.sidr_controller").css({
+                    position: "fixed"
+                });
+                $("div.sidr_scores").css({
+                    position: "relative",
+                    top: 300,
+                    height: $(window).height() - 300
+                });
+            });
+
             // click the others score
             $('li.generated_score_list').click(function() {
-                // console.log(1);
-                // console.log($(this));
-                // console.log($(this).children("input#hidden_id"));
-                // console.log($(this).children("input").val());
-                // 
                 var hiddenID = $(this).children(".hidden_id").val();
                 var displayScore = $(this).children(".hidden_display_score").val();
                 var actualScore = $(this).children(".score_list_score").html();
 
-
-                // console.log(displayScore);
-                // console.log(actualScore);
                 loadScore(hiddenID, displayScore, actualScore);
-
             });
 
             // restart
             $('#c_restart').click(function() {
-                readyToStart();
+                initialize();
             });
 
             // stop and go
-            $('#c_stop_or_go').click(function() {
-                if (bpmWriterTimer === null) {
-                    autoPlay();
-                } else {
-                    stopBaseBpmWriter();
-                    $("div#c_b_stop").hide();
-                    $("div#c_b_go").show();
-                }
-                return;
+            $('#c_b_stop').click(function() {
+                stopAutoPlay();
+            });
+            $('#c_b_go').click(function() {
+                autoPlay();
             });
 
             // sidr close when mouse is out of screen
@@ -420,14 +449,20 @@ $(function() {
                     data: { 
                         'input_name' : nickName,
                         'input_bpm' : bpm,
-                        'input_sound_name' : 'TEMP',
+                        'input_sound_name' : 'patatap',
                         'display_score_string' : inputPartDOM.html(),
                         'score[]' : score 
                     },
-                    success: function(msg) {
-                        console.log(msg);
-                        $('.generated_score_ul').remove();
-                        $('#sidr').append(msg.scoreList);
+                    success: function(data, status, xhr) {
+                        if (xhr.status === 200) {
+                            if (data.APP_ERR) {
+                                alert(data.APP_ERR);
+                            } else {
+                                $('.generated_score_ul').remove();
+                                $('#sidr').append(data.scoreList);
+                            }
+                        }
+                        console.log("---------------");
                     }
                  });
             });

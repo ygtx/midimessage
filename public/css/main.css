@@ -72,6 +72,18 @@ a#controller-opener {
 input:focus, select:focus, textarea:focus {
     outline: none;
 }
+div#sidr div.sidr_controller {
+    position: absolute;
+    top: 0;
+}
+
+div#sidr div.sidr_scores {
+    position: absolute;
+    top: 300px;
+    overflow-y: scroll;
+    overflow-x: fixed;
+}
+
 div#sidr ul li#c_restart {
     text-align:center;
     margin: 5px;

@@ -21,23 +21,27 @@
 
 
         <div id="sidr" class="sidr">
-            <ul>
-                <li id="c_restart"><input type="image" src="public/img/icon_close_alt2.png" ></li>
-                <li id="c_stop_or_go">
-                    <div class="btn_centerize" id="c_b_stop"
-                        >
-                        <img src="public/img/icon_pause_alt2.png">
-                    </div>
-                    <div class="btn_centerize" id="c_b_go">
-                        <img src="public/img/arrow_triangle-right_alt2.png">
-                    </div>
-                </li>
-                <li id="c_upload">
-                    <input type="text" value="" id="c_t_nick_name">
-                    <input type="image" src="public/img/icon_cloud-upload.png" id="upload-button"></li>
+            <div class="sidr_controller">
+                <ul>
+                    <li id="c_restart"><input type="image" src="public/img/icon_close_alt2.png" ></li>
+                    <li id="c_stop_or_go">
+                        <div class="btn_centerize" id="c_b_stop"
+                            >
+                            <img src="public/img/icon_pause_alt2.png">
+                        </div>
+                        <div class="btn_centerize" id="c_b_go">
+                            <img src="public/img/arrow_triangle-right_alt2.png">
+                        </div>
+                    </li>
+                    <li id="c_upload">
+                        <input type="text" value="" id="c_t_nick_name">
+                        <input type="image" src="public/img/icon_cloud-upload.png" id="upload-button"></li>
                 </li>
             </ul>
+            </div>
+
             <%- score_list %>
+
         </div>
 
     	<p id="main-part">*</p>
