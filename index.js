@@ -12,6 +12,12 @@ handle["/select_sound"] = requestHandlers.selectSound;
 handle["/send_mail"] = requestHandlers.sendMailAndSave;
 handle["/load"] = requestHandlers.start;
 
+
+handle["/_sp"] = requestHandlers.startSP;
+handle["/load_sp"] = requestHandlers.loadSP;
+handle["/send_mail_sp"] = requestHandlers.sendMailAndSaveSP;
+
+
 handle["/public"] = requestHandlers.publicDir;
 
 

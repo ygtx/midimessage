@@ -3,8 +3,8 @@
 
 function route(handle, pathname, response, request) {
 
-    console.log(pathname);
-    console.log(handle[pathname]);
+    // console.log(pathname);
+    // console.log(handle[pathname]);
 
     if (typeof handle[pathname] === 'function') {
         handle[pathname](response, request);

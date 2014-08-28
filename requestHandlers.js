@@ -10,6 +10,7 @@ var pg = require('pg'),
     path = require('path'),
     qs = require('querystring')
     ;
+
 var index_view = fs.readFileSync('./views/index.ejs','utf8'); 
 var system_error_view = fs.readFileSync('./views/system_error.ejs','utf8'); 
 var score_li = fs.readFileSync('./views/score_li.ejs','utf8'); 
@@ -362,6 +363,18 @@ function publicDir(response, request) {
     });
 
 }
+
+/* ------------------------
+ *
+ * SP
+ *
+ -------------------------- */ 
+
+function startSP(response) {
+}
+
+
+
 
 exports.start = start;
 exports.upload = upload;

@@ -214,7 +214,7 @@ $(function() {
         }
     }
 
-    function loadScore(hiddenID, soundId, displayScore, actualScore) {
+    function loadScore(hiddenID, soundId, displayScore, actualScore, nickName) {
         console.log('loading...'); 
         console.log(displayScore); 
         console.log(actualScore); 
@@ -222,6 +222,7 @@ $(function() {
         $("#main-part").html("*");
         console.log(soundId);
         $("select#sound_name").val(soundId);
+        $("input#c_t_nick_name").val(nickName);
         score = actualScore;
         stopAutoPlay();
         btnReadyToGo();
@@ -458,10 +459,11 @@ $(function() {
             $('li.generated_score_list').click(function() {
                 var hiddenID = $(this).children(".hidden_id").val();
                 var displayScore = $(this).children(".hidden_display_score").val();
+                var nickName  = $(this).children(".score_list_name").html();
                 var actualScore = $(this).children(".score_list_score").html();
                 var soundId = $(this).children(".hidden_sound_id").val();
 
-                loadScore(hiddenID, soundId, displayScore, actualScore);
+                loadScore(hiddenID, soundId, displayScore, actualScore, nickName);
                 loadSelectSound(soundId);
                 uploadedId = hiddenID;
 
