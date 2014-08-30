@@ -1,0 +1,94 @@
+<!doctype html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>MidiTap</title>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<link rel="stylesheet" media="screen" type="text/css" href="/public/css/sp_main.css" />
+  </head>
+  <body>
+    <div id="main">
+
+        <div id="score-container">
+    	    <span id="input-part">&nbsp;</span>
+        </div>
+
+        <div id="c_b_stop_or_go_container">
+            <div class="btn_centerize" id="c_b_go">
+                <img src="public/img/arrow_triangle-right_alt2.png">
+            </div>
+
+            <div class="btn_centerize" id="c_b_stop">
+            </div>
+        </div>
+
+        <div id='c_nav_after_play_container'>
+            <div id='c_nav_after_play' class="btn_centerize">
+                <ul>
+                    <li id="c_b_reload"><img src="public/img/reload3.png"></li>
+                    <li id="c_b_show_socials"><img src="public/img/social_share.png"></li>
+                </ul>
+            </div>
+
+            <div class="btn_centerize" id="c_nav_after_play_shower">
+            </div>
+        </div>
+
+        <div id='c_nav_share_container'>
+            <div id='c_nav_shares'>
+                <ul>
+                    <li><img src="public/img/icon_mail_alt.png"></li>
+                    <li><img src="public/img/LINE_icon_Black.png"></li>
+                    <li><img src="public/img/icon_chat_alt.png"></li>
+                    <li><img src="public/img/social_facebook.png"></li>
+                    <li><img src="public/img/social_twitter.png"></li>
+                </ul>
+            </div>
+        </div>
+
+        <li id="c_mail">
+            <input type="email" value="" id="c_t_mail_to" placeholder="ex.) hoge@fuga.com">
+            <input type="image" src="public/img/icon_mail_alt.png" id="email-button"></li>
+        </li>
+
+		<div id="audioarea">    	
+            <audio id="A" class="s-common" src="public/data/patatap/soundsA/1.mp3" preload="auto" ></audio>
+            <audio id="S" class="s-common" src="public/data/patatap/soundsA/2.mp3" preload="auto" ></audio>
+            <audio id="D" class="s-common" src="public/data/patatap/soundsA/3.mp3" preload="auto" ></audio>
+            <audio id="F" class="s-common" src="public/data/patatap/soundsA/4.mp3" preload="auto" ></audio>
+            <audio id="G" class="s-common" src="public/data/patatap/soundsA/5.mp3" preload="auto" ></audio>
+            <audio id="H" class="s-common" src="public/data/patatap/soundsA/6.mp3" preload="auto" ></audio>
+            <audio id="J" class="s-common" src="public/data/patatap/soundsA/7.mp3" preload="auto" ></audio>
+            <audio id="K" class="s-common" src="public/data/patatap/soundsA/8.mp3" preload="auto" ></audio>
+            <audio id="L" class="s-common" src="public/data/patatap/soundsA/9.mp3" preload="auto" ></audio>
+            <audio id="Q" class="s-common" src="public/data/patatap/soundsQ/1.mp3" preload="auto" ></audio>
+            <audio id="W" class="s-common" src="public/data/patatap/soundsQ/2.mp3" preload="auto" ></audio>
+            <audio id="E" class="s-common" src="public/data/patatap/soundsQ/3.mp3" preload="auto" ></audio>
+            <audio id="R" class="s-common" src="public/data/patatap/soundsQ/4.mp3" preload="auto" ></audio>
+            <audio id="T" class="s-common" src="public/data/patatap/soundsQ/5.mp3" preload="auto" ></audio>
+            <audio id="Y" class="s-common" src="public/data/patatap/soundsQ/6.mp3" preload="auto" ></audio>
+            <audio id="U" class="s-common" src="public/data/patatap/soundsQ/7.mp3" preload="auto" ></audio>
+            <audio id="I" class="s-common" src="public/data/patatap/soundsQ/8.mp3" preload="auto" ></audio>
+            <audio id="O" class="s-common" src="public/data/patatap/soundsQ/9.mp3" preload="auto" ></audio>
+            <audio id="P" class="s-common" src="public/data/patatap/soundsQ/10.mp3" preload="auto" ></audio>
+            <audio id="Z" class="s-common" src="public/data/patatap/soundsZ/1.mp3" preload="auto" ></audio>
+            <audio id="X" class="s-common" src="public/data/patatap/soundsZ/2.mp3" preload="auto" ></audio>
+            <audio id="C" class="s-common" src="public/data/patatap/soundsZ/3.mp3" preload="auto" ></audio>
+            <audio id="V" class="s-common" src="public/data/patatap/soundsZ/4.mp3" preload="auto" ></audio>
+            <audio id="B" class="s-common" src="public/data/patatap/soundsZ/5.mp3" preload="auto" ></audio>
+            <audio id="N" class="s-common" src="public/data/patatap/soundsZ/6.mp3" preload="auto" ></audio>
+            <audio id="M" class="s-common" src="public/data/patatap/soundsZ/7.mp3" preload="auto" ></audio>
+       </div>
+    </div>
+
+    <input type="hidden" value="<%- id %>" class="hidden_id">
+    <input type="hidden" value="<%- sound_id %>" class="hidden_sound_id">
+    <input type="hidden" value="<%- sound_name %>" class="hidden_sound_name">
+    <input type="hidden" value="<%- display_score %>" class="hidden_display_score">
+    <input type="hidden" value="<%- nick_name %>" class="hidden_nick_name">
+    <input type="hidden" value="<%- actual_score %>" class="hidden_actual_score">
+
+
+    <script src="public/js/sp_main.js"></script>
+  </body>
+</html>

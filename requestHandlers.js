@@ -8,13 +8,19 @@ var pg = require('pg'),
     ejs = require('ejs'),
     fs = require('fs'),
     path = require('path'),
-    qs = require('querystring')
+    qs = require('querystring'),
+    url = require('url')
     ;
 
-var index_view = fs.readFileSync('./views/index.ejs','utf8'); 
 var system_error_view = fs.readFileSync('./views/system_error.ejs','utf8'); 
 var score_li = fs.readFileSync('./views/score_li.ejs','utf8'); 
 var score_ul = fs.readFileSync('./views/score_ul.ejs','utf8'); 
+
+var index_view = fs.readFileSync('./views/index.ejs','utf8'); 
+
+var spViews = {
+    'start' : fs.readFileSync('./views/sp_index.ejs','utf8')
+};
 
 var dcArray = {
     0 : fs.readFileSync('./public/data/patatap/dc-patatap.html', 'utf8'),
@@ -29,6 +35,33 @@ var dcNameArray = {
     2 : 'jemapur02', 
     3 : 'jemapur03' 
 };
+
+var uaTypes = [
+    'iPhone',
+    'iPad',
+    'Android',
+    'Windows Phone'
+];
+
+function isSP(request) {
+
+    var ua = JSON.stringify(request.headers['user-agent']);
+    console.log("-------------------- HEADER INFO START");
+    //ソースIPの取得
+    console.log("[address]"+request.connection.remoteAddress);
+    //User-Agentの取得
+    console.log("[ua]"+JSON.stringify(request.headers['user-agent']));
+    //他ヘッダー
+    console.log("[headers]"+JSON.stringify(request.headers));
+    console.log("-------------------- HEADER INFO END");
+    for (var i = 0; i < uaTypes.length; i++) {
+        if (ua.indexOf(uaTypes[i]) === -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }   
+}
 
 function connectToDB(callback) {
     var conString = CNST.DBDATASOURCE + 
@@ -110,17 +143,88 @@ function buildScoreList(callback) {
     });
 }
 
-function start(response) {
-    buildScoreList(function(err, scoreUL) {
+function getSingleScore(scoreId, callback) {
+    connectToDB(function(err, client) {
         if (err) {
-            return responseSystemError(response);
+            callback(err, null);
         }
-        response.writeHead(200, CNST.CONTENT_TYPE_HTML);
-        response.write(ejs.render(index_view, {
-            score_list : scoreUL
-        }));
-        response.end();
-    });
+        client.query(
+            CNST.SQL_4,
+            [scoreId],
+            function(err, result) {
+                if (err) {
+                    return callback(err, null);
+                } else {
+                    if (result.length === 0) {
+                        client.query(
+                            CNST.SQL_4,
+                            1,
+                            function(err, result) {
+                                if(err) {
+                                    return callback(err, null);
+                                } else {
+                                    callback(null, result);
+                                }
+                            });
+                        
+                    }
+                    callback(null, result);
+                }
+         });
+
+     });
+ }
+
+
+function start(response, request) {
+
+
+    if (isSP(request)) {
+
+        var url_parts = url.parse(request.url, true);
+        var getParameters = url_parts.query;
+
+        var scoreId = getParameters.score;
+
+        if (isNaN(scoreId)) {
+           scoreId = 1;
+        }
+
+
+
+        getSingleScore(scoreId, function(err, result) {
+
+
+            if (err) {
+                return responseSystemError(response);
+            }
+
+
+            response.writeHead(200, CNST.CONTENT_TYPE_HTML);
+            response.write(ejs.render(spViews.start, {
+
+                "id" : result.rows[0].id,
+                "sound_id" : result.rows[0].sound_id,
+                "sound_name" : result.rows[0].display_score_string,
+                "display_score" : result.rows[0].name,
+                "nick_name" : dcNameArray[result.rows[0].sound_id],
+                "actual_score" : result.rows[0].display_score_string
+
+            }));
+            response.end();
+        });
+    } else {
+        buildScoreList(function(err, scoreUL) {
+            if (err) {
+                return responseSystemError(response);
+            }
+            response.writeHead(200, CNST.CONTENT_TYPE_HTML);
+            response.write(ejs.render(index_view, {
+                score_list : scoreUL
+            }));
+            response.end();
+        });
+    }
 }
 
 function selectSound(response, request) {
@@ -363,17 +467,6 @@ function publicDir(response, request) {
     });
 
 }
-
-/* ------------------------
- *
- * SP
- *
- -------------------------- */ 
-
-function startSP(response) {
-}
-
-
 
 
 exports.start = start;
