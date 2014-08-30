@@ -33,7 +33,7 @@ $(function() {
      --------------------------------------------------*/
 
     function initializeControllers() {
-        $("div#c_b_stop_or_go_container").fadeIn(200);
+        $("div#c_b_stop_or_go_container").show();
         $("div#c_nav_after_play_container").hide();
         $("div#c_nav_share_container").hide();
     }
@@ -41,7 +41,7 @@ $(function() {
 
     function btnReadyToStop() {
         initializeControllers();
-        $("div#c_b_go").fadeOut(200);
+        $("div#c_b_go").hide();
     }
 
     function btnReadyToGo() {
@@ -58,9 +58,9 @@ $(function() {
 
     function toggleAfterPlayButtons(showOrHide) {
         if (showOrHide === null) {
-           $("div#c_nav_after_play").toggle("slow");
+           $("div#c_nav_after_play").fadeToggle("slow");
         } else {
-           $("div#c_nav_after_play").toggle("slow", showOrHide);
+           $("div#c_nav_after_play").fadeToggle("slow", showOrHide);
         }
     }
 
@@ -91,6 +91,11 @@ $(function() {
         console.log(score);
     }
 
+    function readyToAutoPlay() {
+
+        $("#input-part").html("");
+    }
+
     /* ---------------------------------
     *
     * controller impl
@@ -119,10 +124,6 @@ $(function() {
         }
         autoPlayTimer = setInterval(
           function() {
-
-                console.log("************* now auto play");
-
-
                 if (index >= score.length) {
                     stopAutoPlay();
                     showAfterPlayController();
@@ -154,50 +155,60 @@ $(function() {
             $(".s-common").each(function() {
                     $(this).load();
             }); 
+    });
 
-            // stop and go
-            $('#c_b_stop').click(function() {
-                stopAutoPlay();
-                btnReadyToGo();
-            });
-            $('#c_b_go').click(function() {
-                autoPlay();
-                btnReadyToStop();
-            });
+    // stop and go
+    $('#c_b_stop').click(function() {
+        stopAutoPlay();
+        btnReadyToGo();
+    });
+    $('#c_b_go').click(function() {
+        readyToAutoPlay();
+        autoPlay();
+        btnReadyToStop();
+    });
 
-            $("div#c_nav_after_play_shower").click(function() {
-                toggleAfterPlayButtons(null);
-            });
+    $("div#c_nav_after_play_toggle").click(function() {
+        console.log(1);
+        toggleAfterPlayButtons(null);
+        btnReadyToStop();
+    });
 
-            $("li#c_b_reload").click(function() {
-                autoPlay();
-                btnReadyToStop();
-            });
+    $("li#c_b_reload").click(function() {
+        readyToAutoPlay();
+        btnReadyToStop();
+        autoPlay();
+    });
 
-            $("li#c_b_show_socials").click(function() {
-                showShareController();
-            });
+    $("li#c_b_show_socials").click(function() {
+        showShareController();
+    });
 
-            
+    $("div#c_nav_shares_close").click(function() {
+        showAfterPlayController();
+    });
 
 
-            // mail button action
-            $('#email-button').click(function() {
-                
-            });
 
-            initializeControllers();
-
-            // var hiddenID = $(this).children(".hidden_id").val();
-            // var soundId = $(this).children(".hidden_sound_id").val();
-            // var soundName = $(this).children(".hidden_sound_name").val();
-            // var displayScore = $(this).children(".hidden_display_score").val();
-            // var nickName  = $(this).children(".hidden_nick_name").html();
-            
-            var actualScore = (".hidden_actual_score").val();
-            loadScore(actualScore);
-            btnReadyToGo();
+    // mail button action
+    $('#email-button').click(function() {
 
     });
+
+    initializeControllers();
+
+    // var hiddenID = $(this).children(".hidden_id").val();
+    // var soundId = $(this).children(".hidden_sound_id").val();
+    // var soundName = $(this).children(".hidden_sound_name").val();
+    // var displayScore = $(this).children(".hidden_display_score").val();
+    // var nickName  = $(this).children(".hidden_nick_name").html();
+
+    var actualScore = $("input#hidden_actual_score").val();
+    loadScore(actualScore);
+    btnReadyToGo();
 }); 
+
+
+
+
 

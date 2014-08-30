@@ -24,32 +24,60 @@
 
         <div id='c_nav_after_play_container'>
             <div id='c_nav_after_play' class="btn_centerize">
-                <ul>
+                <ul class="col_1_btn_list">
                     <li id="c_b_reload"><img src="public/img/reload3.png"></li>
                     <li id="c_b_show_socials"><img src="public/img/social_share.png"></li>
                 </ul>
             </div>
 
-            <div class="btn_centerize" id="c_nav_after_play_shower">
+            <div id="c_nav_after_play_toggle">
             </div>
         </div>
 
         <div id='c_nav_share_container'>
             <div id='c_nav_shares'>
-                <ul>
-                    <li><img src="public/img/icon_mail_alt.png"></li>
-                    <li><img src="public/img/LINE_icon_Black.png"></li>
-                    <li><img src="public/img/icon_chat_alt.png"></li>
-                    <li><img src="public/img/social_facebook.png"></li>
-                    <li><img src="public/img/social_twitter.png"></li>
+                <ul class="col_2_btn_list">
+                    <li>
+                        <a href="mailto:?subject=MidiTap&amp;body=<%- this_url %>">
+                            <img src="public/img/icon_mail_alt.png">
+                        </a>
+                    </li>
+
+                    <li>
+                        <span>
+                            <script type="text/javascript" src="//media.line.me/js/line-button.js?v=20140411" ></script>
+                            <script type="text/javascript">
+                                new media_line_me.LineButton({"pc":false,"lang":"ja","type":"d"});
+                                </script>
+                        </span>
+                    </li>
+
+                    <li>
+                        <a href="sms:?body=<%- this_url %V>">
+                            <img src="public/img/icon_chat_alt.png">
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="fb://post?body=<%- this_url %>">
+                            <img src="public/img/social_facebook.png">
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="twitter://post?message=<%- this_url %>">
+                            <img src="public/img/social_twitter.png">
+                        </a>
+                        
+                    </li>
+
                 </ul>
+                <div id='c_nav_shares_close'>
+                    <img src="public/img/icon_close.png">
+                </div>
             </div>
         </div>
 
-        <li id="c_mail">
-            <input type="email" value="" id="c_t_mail_to" placeholder="ex.) hoge@fuga.com">
-            <input type="image" src="public/img/icon_mail_alt.png" id="email-button"></li>
-        </li>
 
 		<div id="audioarea">    	
             <audio id="A" class="s-common" src="public/data/patatap/soundsA/1.mp3" preload="auto" ></audio>
@@ -81,12 +109,12 @@
        </div>
     </div>
 
-    <input type="hidden" value="<%- id %>" class="hidden_id">
-    <input type="hidden" value="<%- sound_id %>" class="hidden_sound_id">
-    <input type="hidden" value="<%- sound_name %>" class="hidden_sound_name">
-    <input type="hidden" value="<%- display_score %>" class="hidden_display_score">
-    <input type="hidden" value="<%- nick_name %>" class="hidden_nick_name">
-    <input type="hidden" value="<%- actual_score %>" class="hidden_actual_score">
+    <input type="hidden" value="<%- id %>" id="hidden_id">
+    <input type="hidden" value="<%- sound_id %>" id="hidden_sound_id">
+    <input type="hidden" value="<%- sound_name %>" id="hidden_sound_name">
+    <input type="hidden" value="<%- display_score %>" id="hidden_display_score">
+    <input type="hidden" value="<%- nick_name %>" id="hidden_nick_name">
+    <input type="hidden" value="<%- actual_score %>" id="hidden_actual_score">
 
 
     <script src="public/js/sp_main.js"></script>
