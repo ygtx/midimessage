@@ -500,7 +500,7 @@ $(function() {
                         uploadedId = data.uploadedId;
                         console.log(uploadedId);
                         window.history.pushState(null, null, '/load?score=' + uploadedId);
-                        $('.fb-share-button').data(
+                        $('.fb-send').data(
                             'href', 'http://' + location.hostname + '/load?score=' + uploadedId);
                         alert('saved');
                     }
