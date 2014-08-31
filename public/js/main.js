@@ -365,7 +365,7 @@ $(function() {
 
     $("#auto-play-button").click(function() {
             if (autoPlayTimer === null) {
-                        $("#input-part").html("");
+                        $("#input-part").html("&nbsp;");
 
                 autoPlay();
             } else {
