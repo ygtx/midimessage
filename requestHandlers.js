@@ -417,7 +417,7 @@ function sendMailAndSave(response, request) {
                                 console.log(err.message);
                                 return;
                             }
-                            uploadedId = result[0].id;
+                            uploadedId = result.insertId;
 
                             buildScoreList(function(err, scoreUL) {
                                 if (err) {
