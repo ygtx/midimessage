@@ -162,7 +162,6 @@ $(function() {
     }
 
     function autoPlay() {
-        $("#input-part").html("&nbsp");
         var index = 0;
         btnReadyToStop();
         if (autoPlay !== null) {
@@ -366,6 +365,8 @@ $(function() {
 
     $("#auto-play-button").click(function() {
             if (autoPlayTimer === null) {
+                        $("#input-part").html("");
+
                 autoPlay();
             } else {
                 stopAutoPlay();
