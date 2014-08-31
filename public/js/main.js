@@ -213,6 +213,9 @@ $(function() {
     ----------------------------------- */
 
     function myPlay(audio, pressedKey) {
+
+        
+
         audio.load();
         // audio.currentTime = 0;
         audio.play();
@@ -299,6 +302,7 @@ $(function() {
         var s = document.getElementById(pressedKey);
         if (s !== null) {
             myPlay(s, pressedKey);
+            uploadedId = null;
         }
     }
 
@@ -430,6 +434,7 @@ $(function() {
         uploadedId = hiddenID;
 
         hideScoreListModal();
+        window.history.pushState(null, null, '/load?score=' + uploadedId);
     });
 
     // restart
@@ -493,6 +498,7 @@ $(function() {
                         $('div#score-list').remove();
                         $('div#score-list-container').prepend(data.scoreList);
                         uploadedId = data.uploadedId;
+                        console.log(uploadedId);
                         window.history.pushState(null, null, '/load?score=' + uploadedId);
                         $('.fb-share-button').data(
                             'href', 'http://' + location.hostname + '/load?score=' + uploadedId);
@@ -514,7 +520,7 @@ $(function() {
         if (!emailAddress || emailAddress === null || !validateEmail(emailAddress)) {
             return alert('please input correct email address.');
         }
-        if (uploadedId === null) {
+        if (uploadedId === null || uploadedId === undefined) {
             return alert('please save this before sending an email.');
         }
 
@@ -538,7 +544,7 @@ $(function() {
                         alert(data.APP_ERR);
                     } else {
                         window.history.pushState(null, null, '/load?score=' + uploadedId);
-                        $('.fb-share-button').data(
+                        $('.fb-send').data(
                             'href', 'http://' + location.hostname + '/load?score=' + uploadedId);
                         alert('mail has been sent.');
                     }

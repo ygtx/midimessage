@@ -153,6 +153,7 @@ function buildScoreList(callback) {
                         score_li : scoreList
                     });
 
+                    client.end();
 
                     callback(null, scoreUL);
                 }
@@ -330,6 +331,7 @@ function upload(response, request) {
                                     // uploadedId : result.id
                                 });
                                 response.end(json);
+                                client.end();
                             });
                     });
                 });
@@ -440,6 +442,7 @@ function sendMailAndSave(response, request) {
                                                 uploadedId : uploadedId,
                                                 mailResult : mailResult
                                             });
+                                            client.end();
                                             return response.end(json);
                                         });
                                 });
