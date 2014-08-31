@@ -15,7 +15,8 @@ exports.APP_ERR_3 = 'Please type something';
 exports.APP_ERR_4 = 'Couldnt send email';
 
 exports.SQL_1 = 'SELECT * FROM score order by created_at desc limit 50;';
-exports.SQL_2 = 'INSERT INTO score (name, bpm, sound_id, display_score_string, score_string, created_at) VALUES ($1, $2, $3, $4, $5, now()) RETURNING id';
+// exports.SQL_2 = 'INSERT INTO score (name, bpm, sound_id, display_score_string, score_string, created_at) VALUES ($1, $2, $3, $4, $5, now()) RETURNING id';
+exports.SQL_2 = 'INSERT INTO score (name, bpm, sound_id, display_score_string, score_string, created_at) VALUES (?, ?, ?, ?, ?, now())';
 exports.SQL_3 = 'SELECT count(*) FROM score';
 exports.SQL_4 = 'SELECT * FROM score WHERE id = $1';
 

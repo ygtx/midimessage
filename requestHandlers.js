@@ -5,8 +5,8 @@ var CNST = require("./constants");
 var AUTH_CNST = require("./authConstants");
 var mailSender = require("./mailSender");
 
-var pg = require('pg'),
-    ejs = require('ejs'),
+var mysql = require('mysql');
+var ejs = require('ejs'),
     fs = require('fs'),
     path = require('path'),
     qs = require('querystring'),
@@ -70,7 +70,8 @@ function connectToDB(callback) {
                     "@" + AUTH_CNST.DBHOSTNAME + 
                     ":" + AUTH_CNST.DBPORT  + 
                     "/" + AUTH_CNST.DBNAME;
-    var client = new pg.Client(conString);
+    var client = new mysql.createConnection(conString);
+
     client.connect(function(err) {
             if (err) {
                 callback(err, null);
@@ -103,7 +104,7 @@ function checkSomething(client, callback) {
             if (err) {
                 callback(err, null); 
             } else {
-                if(result.rows[0].count > CNST.RECORD_CAP) {
+                if(result[0].count > CNST.RECORD_CAP) {
                     callback(null, CNST.APP_ERR_1);
                 }
             } 
@@ -125,19 +126,23 @@ function buildScoreList(callback) {
                 if (err) {
                     return callback(err, null);
                 } else {
-                    for (var i = 0; i < result.rows.length; i++) {
+                    console.log(result);
+
+                    for (var i = 0; i < result.length; i++) {
                         scoreList += ejs.render(score_li, {
-                           id : result.rows[i].id,
-                           sound_id : result.rows[i].sound_id,
-                           display_score : result.rows[i].display_score_string,
-                           name : result.rows[i].name,
-                           sound_name : dcNameArray[result.rows[i].sound_id],
-                           score_string : result.rows[i].display_score_string
+                            id : result[i].id,
+                            sound_id : result[i].sound_id,
+                            display_score : result[i].display_score_string,
+                            name : result[i].name,
+                            sound_name : dcNameArray[result[i].sound_id],
+                            score_string : result[i].display_score_string
                         });
                     }
                     scoreUL = ejs.render(score_ul, {
                         score_li : scoreList
                     });
+
+
                     callback(null, scoreUL);
                 }
          });
@@ -204,17 +209,18 @@ function start(response, request) {
             response.writeHead(200, CNST.CONTENT_TYPE_HTML);
             response.write(ejs.render(spViews.start, {
 
-                "id" : result.rows[0].id,
-                "sound_id" : result.rows[0].sound_id,
-                "sound_name" : result.rows[0].display_score_string,
-                "display_score" : result.rows[0].name,
-                "nick_name" : dcNameArray[result.rows[0].sound_id],
-                "actual_score" : result.rows[0].display_score_string
+                "id" : result[0].id,
+                "sound_id" : result[0].sound_id,
+                "sound_name" : result[0].display_score_string,
+                "display_score" : result[0].name,
+                "nick_name" : dcNameArray[result[0].sound_id],
+                "actual_score" : result[0].display_score_string
 
             }));
             response.end();
         });
     } else {
+
         buildScoreList(function(err, scoreUL) {
             if (err) {
                 return responseSystemError(response);
@@ -307,7 +313,8 @@ function upload(response, request) {
                                 response.writeHead(200, CNST.CONTENT_TYPE_JSON);
                                 var json = JSON.stringify({
                                     scoreList : scoreUL,
-                                    uploadedId : result.id
+                                    uploadedId : result.insertId
+                                    // uploadedId : result.id
                                 });
                                 response.end(json);
                             });
@@ -402,7 +409,7 @@ function sendMailAndSave(response, request) {
                                 console.log(err.message);
                                 return;
                             }
-                            uploadedId = result.rows[0].id;
+                            uploadedId = result[0].id;
 
                             buildScoreList(function(err, scoreUL) {
                                 if (err) {
