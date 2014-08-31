@@ -435,6 +435,8 @@ $(function() {
 
         hideScoreListModal();
         window.history.pushState(null, null, '/load?score=' + uploadedId);
+        $('.fb-send').data(
+            'href', 'http://' + location.hostname + '/load?score=' + uploadedId);
     });
 
     // restart
