@@ -239,6 +239,7 @@ function start(response, request) {
             }
             response.writeHead(200, CNST.CONTENT_TYPE_HTML);
             response.write(ejs.render(index_view, {
+                this_url : 'http://' + request.headers.host,
                 score_list : scoreUL
             }));
             response.end();
