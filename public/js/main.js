@@ -162,6 +162,7 @@ $(function() {
     }
 
     function autoPlay() {
+        $("#input-part").html("&nbsp");
         var index = 0;
         btnReadyToStop();
         if (autoPlay !== null) {
