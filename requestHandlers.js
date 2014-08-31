@@ -44,6 +44,8 @@ var uaTypes = [
     'Windows Phone'
 ];
 
+
+
 function isSP(request) {
 
     var ua = JSON.stringify(request.headers['user-agent']);
@@ -224,7 +226,8 @@ function start(response, request) {
                 "sound_name" : result[0].display_score_string,
                 "display_score" : result[0].name,
                 "nick_name" : dcNameArray[result[0].sound_id],
-                "actual_score" : result[0].display_score_string
+                "actual_score" : result[0].display_score_string,
+                "this_url" : 'http://' + request.headers.host + '/load?score=' + result[0].id
 
             }));
             response.end();
