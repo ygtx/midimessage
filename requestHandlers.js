@@ -65,12 +65,12 @@ function isSP(request) {
 }
 
 function connectToDB(callback) {
-    var conString = AUTH_CNST.DBDATASOURCE + 
-                    AUTH_CNST.DBUSER  + 
-                    "@" + AUTH_CNST.DBHOSTNAME + 
-                    ":" + AUTH_CNST.DBPORT  + 
-                    "/" + AUTH_CNST.DBNAME;
-    var client = new mysql.createConnection(conString);
+    // var conString = AUTH_CNST.DBDATASOURCE + 
+    //                 AUTH_CNST.DBUSER  + 
+    //                 "@" + AUTH_CNST.DBHOSTNAME + 
+    //                 ":" + AUTH_CNST.DBPORT  + 
+    //                 "/" + AUTH_CNST.DBNAME;
+    // var client = new mysql.createConnection(conString);
 
     // client.connect(function(err) {
     //         if (err) {
@@ -81,6 +81,13 @@ function connectToDB(callback) {
     //             console.log("db callback end as success");
     //         }
     // });
+    var client = mysql.createConnection({
+        host: AUTH_CNST.DBHOSTNAME,
+        database: AUTH_CNST.DBNAME,
+        user: AUTH_CNST.DBUSER,
+        password: AUTH_CNST.DBPASSWORD
+    });
+
     callback(null, client);
 }
 
