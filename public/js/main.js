@@ -435,8 +435,7 @@ $(function() {
 
         hideScoreListModal();
         window.history.pushState(null, null, '/load?score=' + uploadedId);
-        $('.fb-send').data(
-            'href', 'http://' + location.hostname + '/load?score=' + uploadedId);
+        $('.fb-send').attr('ref', hiddenID);
     });
 
     // restart
@@ -502,8 +501,7 @@ $(function() {
                         uploadedId = data.uploadedId;
                         console.log(uploadedId);
                         window.history.pushState(null, null, '/load?score=' + uploadedId);
-                        $('.fb-send').data(
-                            'href', 'http://' + location.hostname + '/load?score=' + uploadedId);
+                        $('.fb-send').attr('ref', uploadedId);
                         alert('saved');
                     }
                 }
@@ -546,8 +544,7 @@ $(function() {
                         alert(data.APP_ERR);
                     } else {
                         window.history.pushState(null, null, '/load?score=' + uploadedId);
-                        $('.fb-send').data(
-                            'href', 'http://' + location.hostname + '/load?score=' + uploadedId);
+                        $('.fb-send').attr('ref', uploadedId);
                         alert('mail has been sent.');
                     }
                 }
@@ -568,7 +565,7 @@ $(function() {
             paramsArray[neet[0]] = neet[1];
         }
 
-        var scoreId  = paramsArray.score;
+        var scoreId  = paramsArray.score || paramsArray.fb_ref;
 
         if (scoreId && $.isNumeric(scoreId)) {
             console.log($("li.score_id_is_" + scoreId));
