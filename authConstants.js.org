@@ -1,0 +1,14 @@
+/*jslint node: true */
+
+exports.DBDATASOURCE = '';
+exports.DBHOSTNAME = '';
+exports.DBPORT = '';
+exports.DBNAME = '';
+exports.DBUSER = '';
+exports.DBPASSWORD = '';
+
+exports.MAIL_SERVICE = '';
+exports.MAIL_USER = '';
+exports.MAIL_PASS = '';
+
+

@@ -18,6 +18,9 @@ handle["/load"] = requestHandlers.start;
 handle["/public"] = requestHandlers.publicDir;
 
 // function start(route, handle) {
+
+
+
 function onRequest(request, response) {
 
     // PC and SP common
@@ -32,7 +35,11 @@ function onRequest(request, response) {
 }
 var port = process.env.PORT || 1337;
 http.createServer(onRequest).listen(port);
-console.log("Server has started.");
+
+
+
+
+// console.log("Server has started.");
 //}
 
 // exports.start = start;

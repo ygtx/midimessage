@@ -1,15 +1,15 @@
 /*jslint node: true */
 "use strict";
 
-var CNST = require("./constants");
+var AUTH_CNST = require("./authConstants");
 var mailer = require('nodemailer');
 
 //SMTPの設定
 var setting = {
-    service: CNST.MAIL_SERVICE, //'Gmail'、'Hotmail'、'Yahoo Mail'など
+    service: AUTH_CNST.MAIL_SERVICE, //'Gmail'、'Hotmail'、'Yahoo Mail'など
     auth: {
-        user: CNST.MAIL_USER,
-        pass: CNST.MAIL_PASS
+        user: AUTH_CNST.MAIL_USER,
+        pass: AUTH_CNST.MAIL_PASS
     }
 };
 

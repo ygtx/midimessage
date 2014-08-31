@@ -2,6 +2,7 @@
 "use strict";
 
 var CNST = require("./constants");
+var AUTH_CNST = require("./authConstants");
 var mailSender = require("./mailSender");
 
 var pg = require('pg'),
@@ -64,11 +65,11 @@ function isSP(request) {
 }
 
 function connectToDB(callback) {
-    var conString = CNST.DBDATASOURCE + 
-                    CNST.DBUSER  + 
-                    "@" + CNST.DBHOSTNAME + 
-                    ":" + CNST.DBPORT  + 
-                    "/" + CNST.DBNAME;
+    var conString = AUTH_CNST.DBDATASOURCE + 
+                    AUTH_CNST.DBUSER  + 
+                    "@" + AUTH_CNST.DBHOSTNAME + 
+                    ":" + AUTH_CNST.DBPORT  + 
+                    "/" + AUTH_CNST.DBNAME;
     var client = new pg.Client(conString);
     client.connect(function(err) {
             if (err) {
