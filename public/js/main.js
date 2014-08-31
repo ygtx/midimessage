@@ -365,7 +365,6 @@ $(function() {
 
     $("#auto-play-button").click(function() {
             if (autoPlayTimer === null) {
-                        $("#input-part").html("&nbsp;");
 
                 autoPlay();
             } else {
@@ -452,6 +451,7 @@ $(function() {
         uploadedId = null;
     });
     $('#c_b_go').click(function() {
+                $("#input-part").html("&nbsp;");
         autoPlay();
         uploadedId = null;
     });
