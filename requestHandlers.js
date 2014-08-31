@@ -58,12 +58,11 @@ function isSP(request) {
     console.log("[headers]"+JSON.stringify(request.headers));
     console.log("-------------------- HEADER INFO END");
     for (var i = 0; i < uaTypes.length; i++) {
-        if (ua.indexOf(uaTypes[i]) === -1) {
-            return false;
-        } else {
+        if (ua.indexOf(uaTypes[i]) !== -1) {
             return true;
-        }
+        } 
     }   
+    return false;
 }
 
 function connectToDB(callback) {
