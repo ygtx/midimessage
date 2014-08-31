@@ -238,6 +238,7 @@ $(function() {
         } else {
             $("#main-part").html(words);
         }
+        $("#input-part").append(pressedKey + ' ');
     }
 
     function playMode(code) {
@@ -451,7 +452,7 @@ $(function() {
         uploadedId = null;
     });
     $('#c_b_go').click(function() {
-                $("#input-part").html("&nbsp;");
+        $("#input-part").html("");
         autoPlay();
         uploadedId = null;
     });
