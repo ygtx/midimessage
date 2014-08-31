@@ -72,15 +72,16 @@ function connectToDB(callback) {
                     "/" + AUTH_CNST.DBNAME;
     var client = new mysql.createConnection(conString);
 
-    client.connect(function(err) {
-            if (err) {
-                callback(err, null);
-                console.log("db callback end as error");
-            } else {
-                callback(null, client);
-                console.log("db callback end as success");
-            }
-    });
+    // client.connect(function(err) {
+    //         if (err) {
+    //             callback(err, null);
+    //             console.log("db callback end as error");
+    //         } else {
+    //             callback(null, client);
+    //             console.log("db callback end as success");
+    //         }
+    // });
+    callback(null, client);
 }
 
 function responseSystemError(response) {
