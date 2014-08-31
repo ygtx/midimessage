@@ -126,12 +126,14 @@ function buildScoreList(callback) {
     var scoreUL = '';
     connectToDB(function(err, client) {
         if (err) {
+            console.log(err);
             callback(err, null);
         } 
         client.query(
             CNST.SQL_1, 
             function(err, result) {
                 if (err) {
+                    console.log(err);
                     return callback(err, null);
                 } else {
                     console.log(result);
