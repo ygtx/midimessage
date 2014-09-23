@@ -11,10 +11,7 @@ var inputFocusFlag = false;
 
 var uploadedId = null;
 
-// var APP_ERR_1 = 'capped. in checkSomething';
-
-
-var eightWords = Array(8);
+// var eightWords = Array(8);
 var score = [];
 
 var button = {
@@ -99,7 +96,7 @@ $(function() {
         words = "";
         bpmWriterPauseFlag = false;
         inputFocusFlag = false;
-        eightWords = Array(8);
+        // eightWords = Array(8);
         score = []; 
         $("#input-part").html("");
         btnReadyToStop();
@@ -198,12 +195,15 @@ $(function() {
         console.log('loading...'); 
         console.log(displayScore); 
         console.log(actualScore); 
+        var actualScoreArray = JSON.parse(actualScore);
+        console.log(actualScore); 
         $("#input-part").html(displayScore);
         $("#main-part").html("*");
         console.log(soundId);
         $("select#sound_name").val(soundId);
         $("input#c_t_nick_name").val(nickName);
-        score = actualScore;
+        //score = actualScore;
+        score = actualScoreArray;
         stopAutoPlay();
         btnReadyToGo();
     }
@@ -439,7 +439,6 @@ $(function() {
 
         hideScoreListModal();
         window.history.pushState(null, null, '/load?score=' + uploadedId);
-        $('.fb-send').attr('ref', hiddenID);
     });
 
     // restart
