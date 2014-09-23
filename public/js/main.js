@@ -3,9 +3,9 @@ var bpm = 120;
 var baseTime = 8;
 var bpmTimeMsec = 60 * 1 * 1 * 1000 / (bpm * baseTime); // 1/16 haku
 var autoPlayTimer = null; 
-var bpmCounterTimer = null;
+// var bpmCounterTimer = null;
 var bpmWriterTimer = null; 
-var words = "";
+// var words = "";
 var bpmWriterPauseFlag = false;
 var inputFocusFlag = false;
 
@@ -96,10 +96,14 @@ $(function() {
      --------------------------------------------------*/
 
     function initialize() {
-        autoPlayTimer = null; 
-        bpmCounterTimer = null;
-        bpmWriterTimer = null; 
-        words = "";
+        if(autoPlayTimer !== null) {
+            stopAutoPlay();
+        } 
+        // bpmCounterTimer = null;
+        if (bpmWriterTimer !== null) {
+            stopBaseBpmWriter(); 
+        }
+        // words = "";
         bpmWriterPauseFlag = false;
         inputFocusFlag = false;
         // eightWords = Array(8);
