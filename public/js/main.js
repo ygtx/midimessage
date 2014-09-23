@@ -197,7 +197,7 @@ $(function() {
         console.log('-------------- '); 
         console.log(actualScore); 
         console.log("[" + actualScore + "]");
-        var actualScoreArray = JSON.parse("[" + actualScore + "]");
+        var actualScoreArray = actualScore.split(',');
         console.log('-------------- '); 
         console.log(actualScore); 
         console.log('-------------- '); 
