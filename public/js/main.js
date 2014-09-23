@@ -192,14 +192,19 @@ $(function() {
     }
 
     function loadScore(hiddenID, soundId, displayScore, actualScore, nickName) {
-        console.log('loading...'); 
+        console.log('-------------- loading...'); 
         console.log(displayScore); 
+        console.log('-------------- '); 
         console.log(actualScore); 
         var actualScoreArray = JSON.parse(actualScore);
+        console.log('-------------- '); 
         console.log(actualScore); 
+        console.log('-------------- '); 
+        console.log(soundId);
+        console.log('-------------- '); 
+
         $("#input-part").html(displayScore);
         $("#main-part").html("*");
-        console.log(soundId);
         $("select#sound_name").val(soundId);
         $("input#c_t_nick_name").val(nickName);
         //score = actualScore;
