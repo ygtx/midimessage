@@ -192,23 +192,24 @@ $(function() {
     }
 
     function loadScore(hiddenID, soundId, displayScore, actualScore, nickName) {
+        /*
         console.log('-------------- loading...'); 
         console.log(displayScore); 
         console.log('-------------- '); 
         console.log(actualScore); 
         console.log("[" + actualScore + "]");
-        var actualScoreArray = actualScore.split(',');
         console.log('-------------- '); 
         console.log(actualScore); 
         console.log('-------------- '); 
         console.log(soundId);
         console.log('-------------- '); 
+        */
+        var actualScoreArray = actualScore.split(',');
 
         $("#input-part").html(displayScore);
         $("#main-part").html("*");
         $("select#sound_name").val(soundId);
         $("input#c_t_nick_name").val(nickName);
-        //score = actualScore;
         score = actualScoreArray;
         stopAutoPlay();
         btnReadyToGo();
@@ -445,6 +446,7 @@ $(function() {
 
         hideScoreListModal();
         window.history.pushState(null, null, '/load?score=' + uploadedId);
+        autoPlay();
     });
 
     // restart
