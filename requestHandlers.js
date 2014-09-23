@@ -9,8 +9,8 @@ var mysql = require('mysql');
 var ejs = require('ejs'),
     fs = require('fs'),
     path = require('path'),
-    qs = require('querystring'),
-    url = require('url')
+    qs = require('querystring')
+   // url = require('url')
     ;
 
 var system_error_view = fs.readFileSync('./views/system_error.ejs','utf8'); 
@@ -19,9 +19,11 @@ var score_ul = fs.readFileSync('./views/score_ul.ejs','utf8');
 
 var index_view = fs.readFileSync('./views/index.ejs','utf8'); 
 
+/*
 var spViews = {
     'start' : fs.readFileSync('./views/sp_index.ejs','utf8')
 };
+*/
 
 var dcArray = {
     0 : fs.readFileSync('./public/data/patatap/dc-patatap.html', 'utf8'),
@@ -31,21 +33,21 @@ var dcArray = {
 };
 
 var dcNameArray = {
-    0 : 'patatap', 
     1 : 'jemapur01', 
     2 : 'jemapur02', 
     3 : 'jemapur03' 
 };
 
+/*
 var uaTypes = [
     'iPhone',
     'iPad',
     'Android',
     'Windows Phone'
 ];
+*/
 
-
-
+/*
 function isSP(request) {
 
     var ua = JSON.stringify(request.headers['user-agent']);
@@ -64,6 +66,7 @@ function isSP(request) {
     }   
     return false;
 }
+*/
 
 function connectToDB(callback) {
     var client = mysql.createConnection({
@@ -145,6 +148,7 @@ function buildScoreList(callback) {
     });
 }
 
+/*
 function getSingleScore(scoreId, callback) {
     connectToDB(function(err, client) {
         if (err) {
@@ -176,11 +180,12 @@ function getSingleScore(scoreId, callback) {
 
      });
  }
+ */
 
 
 function start(response, request) {
 
-
+    /*
     if (isSP(request)) {
 
         var url_parts = url.parse(request.url, true);
@@ -217,6 +222,7 @@ function start(response, request) {
             response.end();
         });
     } else {
+        */
 
         buildScoreList(function(err, scoreUL) {
             if (err) {
@@ -229,7 +235,7 @@ function start(response, request) {
             }));
             response.end();
         });
-    }
+    // }
 }
 
 function selectSound(response, request) {
