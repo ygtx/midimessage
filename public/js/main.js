@@ -174,6 +174,9 @@ $(function() {
                     stopAutoPlay();
                     return;
                 }
+                if (score[index] !== '_') {
+                    $("#input-part").append(score[index] + ' ');
+                }
                 var s = document.getElementById(score[index]);
                 if (s !== null) {
                     myPlay(s, score[index]);
@@ -214,13 +217,12 @@ $(function() {
 
     function myPlay(audio, pressedKey) {
 
-        
-
         audio.load();
-        // audio.currentTime = 0;
         audio.play();
 
+        console.log(pressedKey);
 
+        /*
         eightWords.push(pressedKey);
         if (typeof eightWords !== undefined && 
             eightWords.length === 10) {
@@ -238,7 +240,7 @@ $(function() {
         } else {
             $("#main-part").html(words);
         }
-        $("#input-part").append(pressedKey + ' ');
+        */
     }
 
     function playMode(code) {

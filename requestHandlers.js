@@ -66,22 +66,6 @@ function isSP(request) {
 }
 
 function connectToDB(callback) {
-    // var conString = AUTH_CNST.DBDATASOURCE + 
-    //                 AUTH_CNST.DBUSER  + 
-    //                 "@" + AUTH_CNST.DBHOSTNAME + 
-    //                 ":" + AUTH_CNST.DBPORT  + 
-    //                 "/" + AUTH_CNST.DBNAME;
-    // var client = new mysql.createConnection(conString);
-
-    // client.connect(function(err) {
-    //         if (err) {
-    //             callback(err, null);
-    //             console.log("db callback end as error");
-    //         } else {
-    //             callback(null, client);
-    //             console.log("db callback end as success");
-    //         }
-    // });
     var client = mysql.createConnection({
         host: AUTH_CNST.DBHOSTNAME,
         database: AUTH_CNST.DBNAME,
@@ -146,7 +130,7 @@ function buildScoreList(callback) {
                             display_score : result[i].display_score_string,
                             name : result[i].name,
                             sound_name : dcNameArray[result[i].sound_id],
-                            score_string : result[i].display_score_string
+                            score_string : result[i].score_string
                         });
                     }
                     scoreUL = ejs.render(score_ul, {
