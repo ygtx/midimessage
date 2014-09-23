@@ -68,6 +68,10 @@ $(function() {
         $("div#c_b_stop_or_go_container").fadeIn(200);
     }
 
+    function btnFadeOutLoadPlay() {
+        $("div#c_b_stop_or_go_container").fadeOut(200);
+    }
+
     function btnReadyToStop() {
         $("div#c_b_stop").show();
         $("div#c_b_go").hide();
@@ -455,6 +459,8 @@ $(function() {
     // load and Play
     $('#c_b_go_when_load').click(function() {
         autoPlay();
+        btnFadeOutLoadPlay();
+
     });
 
     // restart
