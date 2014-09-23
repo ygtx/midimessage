@@ -441,9 +441,9 @@ $(function() {
     // click the others score
     $('li.generated_score_list').click(function() {
         var hiddenID = $(this).children(".hidden_id").val();
-        var displayScore = $(this).children(".score_list_score").val();
+        var displayScore = $(this).children(".score_list_score").html();
         var nickName  = $(this).children(".score_list_name").html();
-        var actualScore = $(this).children(".hidden_actual_score").html();
+        var actualScore = $(this).children(".hidden_actual_score").val();
         var soundId = $(this).children(".hidden_sound_id").val();
 
         loadScore(hiddenID, soundId, displayScore, actualScore, nickName);
