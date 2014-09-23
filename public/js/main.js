@@ -206,8 +206,8 @@ $(function() {
         */
         var actualScoreArray = actualScore.split(',');
 
-        $("#input-part").html(displayScore);
-        $("#main-part").html("*");
+        // $("#input-part").html(displayScore);
+        // $("#main-part").html("*");
         $("select#sound_name").val(soundId);
         $("input#c_t_nick_name").val(nickName);
         score = actualScoreArray;
