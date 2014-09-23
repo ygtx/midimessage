@@ -64,16 +64,18 @@ $(function() {
      *
      --------------------------------------------------*/
 
+    function btnReadyLoadPlay() {
+        $("div#c_b_stop_or_go_container").fadeIn(200);
+    }
+
     function btnReadyToStop() {
         $("div#c_b_stop").show();
         $("div#c_b_go").hide();
-        console.log(99);
     }
 
     function btnReadyToGo() {
         $("div#c_b_stop").hide();
         $("div#c_b_go").show();
-        console.log(88);
     }
 
     function hideScoreListModal() {
@@ -446,6 +448,12 @@ $(function() {
 
         hideScoreListModal();
         window.history.pushState(null, null, '/load?score=' + uploadedId);
+        btnReadyLoadPlay();
+
+    });
+
+    // load and Play
+    $('#c_b_go_when_load').click(function() {
         autoPlay();
     });
 
